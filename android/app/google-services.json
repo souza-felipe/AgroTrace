@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "260666850499",
+    "project_id": "agrotrace-46199",
+    "storage_bucket": "agrotrace-46199.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260666850499:android:eea9cb02422126f763b676",
+        "android_client_info": {
+          "package_name": "com.example.agrotrace_front"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjF0g-9VFsscZwYV23bWqfIiJYuWQZZKs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
