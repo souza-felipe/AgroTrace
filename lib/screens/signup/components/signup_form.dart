@@ -6,7 +6,7 @@ class SignupForm extends StatefulWidget {
   final GlobalKey<FormState>? formKey;
   final Function(Map<String, String> formData)? onSignup;
   final VoidCallback? onButtonPressed;
-  
+
   // Controladores externos
   final TextEditingController? nameController;
   final TextEditingController? cpfController;
@@ -41,7 +41,7 @@ class _SignupFormState extends State<SignupForm> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
   final _confirmPasswordController = TextEditingController();
-  
+
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
@@ -50,11 +50,12 @@ class _SignupFormState extends State<SignupForm> {
     super.initState();
     _nameController = widget.nameController ?? TextEditingController();
     _cpfController = widget.cpfController ?? TextEditingController();
-    _birthDateController = widget.birthDateController ?? TextEditingController();
+    _birthDateController =
+        widget.birthDateController ?? TextEditingController();
     _phoneController = widget.phoneController ?? TextEditingController();
     _emailController = widget.emailController ?? TextEditingController();
     _passwordController = widget.passwordController ?? TextEditingController();
-    
+
     _cpfController.addListener(_formatCpf);
     _birthDateController.addListener(_formatBirthDate);
     _phoneController.addListener(_formatPhone);
@@ -65,14 +66,14 @@ class _SignupFormState extends State<SignupForm> {
     _cpfController.removeListener(_formatCpf);
     _birthDateController.removeListener(_formatBirthDate);
     _phoneController.removeListener(_formatPhone);
-    
+
     if (widget.nameController == null) _nameController.dispose();
     if (widget.cpfController == null) _cpfController.dispose();
     if (widget.birthDateController == null) _birthDateController.dispose();
     if (widget.phoneController == null) _phoneController.dispose();
     if (widget.emailController == null) _emailController.dispose();
     if (widget.passwordController == null) _passwordController.dispose();
-    
+
     _confirmPasswordController.dispose();
     super.dispose();
   }
@@ -80,7 +81,7 @@ class _SignupFormState extends State<SignupForm> {
   void _formatCpf() {
     final text = _cpfController.text;
     final digits = text.replaceAll(RegExp(r'[^\d]'), '');
-    
+
     if (digits.length <= 11) {
       String formatted = '';
       for (int i = 0; i < digits.length; i++) {
@@ -91,7 +92,7 @@ class _SignupFormState extends State<SignupForm> {
         }
         formatted += digits[i];
       }
-      
+
       if (formatted != text) {
         _cpfController.value = TextEditingValue(
           text: formatted,
@@ -104,7 +105,7 @@ class _SignupFormState extends State<SignupForm> {
   void _formatBirthDate() {
     final text = _birthDateController.text;
     final digits = text.replaceAll(RegExp(r'[^\d]'), '');
-    
+
     if (digits.length <= 8) {
       String formatted = '';
       for (int i = 0; i < digits.length; i++) {
@@ -113,7 +114,7 @@ class _SignupFormState extends State<SignupForm> {
         }
         formatted += digits[i];
       }
-      
+
       if (formatted != text) {
         _birthDateController.value = TextEditingValue(
           text: formatted,
@@ -126,7 +127,7 @@ class _SignupFormState extends State<SignupForm> {
   void _formatPhone() {
     final text = _phoneController.text;
     final digits = text.replaceAll(RegExp(r'[^\d]'), '');
-    
+
     if (digits.length <= 11) {
       String formatted = '';
       for (int i = 0; i < digits.length; i++) {
@@ -141,7 +142,7 @@ class _SignupFormState extends State<SignupForm> {
         }
         formatted += digits[i];
       }
-      
+
       if (formatted != text) {
         _phoneController.value = TextEditingValue(
           text: formatted,
@@ -223,9 +224,7 @@ class _SignupFormState extends State<SignupForm> {
             controller: _cpfController,
             hintText: 'CPF',
             keyboardType: TextInputType.number,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor, insira seu CPF';
@@ -242,9 +241,7 @@ class _SignupFormState extends State<SignupForm> {
             controller: _birthDateController,
             hintText: 'Data de Nascimento (DD/MM/AAAA)',
             keyboardType: TextInputType.datetime,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor, insira sua data de nascimento';
@@ -261,9 +258,7 @@ class _SignupFormState extends State<SignupForm> {
             controller: _phoneController,
             hintText: 'Telefone',
             keyboardType: TextInputType.phone,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-            ],
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Por favor, insira seu telefone';
@@ -374,11 +369,11 @@ class _SignupFormState extends State<SignupForm> {
         fillColor: AppColors.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppColors.taupe, width: 1),
+          borderSide: BorderSide(color: AppColors.border, width: 1),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: AppColors.taupe, width: 1),
+          borderSide: BorderSide(color: AppColors.border, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),

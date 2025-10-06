@@ -9,7 +9,7 @@ class CowIcon extends StatelessWidget {
   const CowIcon({
     super.key,
     this.size = 24,
-    this.color = AppColors.darkBrown,
+    this.color = AppColors.textPrimary,
     this.isFilled = false,
   });
 
@@ -17,10 +17,7 @@ class CowIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(size, size),
-      painter: CowIconPainter(
-        color: color,
-        isFilled: isFilled,
-      ),
+      painter: CowIconPainter(color: color, isFilled: isFilled),
     );
   }
 }
@@ -29,17 +26,15 @@ class CowIconPainter extends CustomPainter {
   final Color color;
   final bool isFilled;
 
-  CowIconPainter({
-    required this.color,
-    required this.isFilled,
-  });
+  CowIconPainter({required this.color, required this.isFilled});
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..style = isFilled ? PaintingStyle.fill : PaintingStyle.stroke
-      ..strokeWidth = 2.0;
+    final paint =
+        Paint()
+          ..color = color
+          ..style = isFilled ? PaintingStyle.fill : PaintingStyle.stroke
+          ..strokeWidth = 2.0;
 
     final path = Path();
 
@@ -108,9 +103,10 @@ class CowIconPainter extends CustomPainter {
 
     // Se for preenchido, adicionar pontos para simular manchas
     if (isFilled) {
-      final spotPaint = Paint()
-        ..color = color.withAlpha(77)
-        ..style = PaintingStyle.fill;
+      final spotPaint =
+          Paint()
+            ..color = color.withAlpha(77)
+            ..style = PaintingStyle.fill;
 
       // Manchas na cabeça
       canvas.drawCircle(
