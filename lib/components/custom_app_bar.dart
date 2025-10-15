@@ -23,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         color: AppColors.primary, // Verde vibrante #1CBA76
         boxShadow: [
           BoxShadow(
-            color: AppColors.taupe.withAlpha(51),
+            color: AppColors.textSecondary.withAlpha(51),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -56,7 +56,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                 ),
-              
+
               // Título simples sem logo (para testar)
               if (!showBackButton) ...[
                 Text(
@@ -68,9 +68,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
               ],
-              
+
               const Spacer(),
-              
+
               if (showBackButton)
                 Expanded(
                   child: Center(
@@ -85,7 +85,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                 ),
-              
+
               // Botão de perfil
               Material(
                 color: Colors.transparent,

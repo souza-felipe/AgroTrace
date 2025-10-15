@@ -3,20 +3,11 @@ import 'custom_navigation_bar.dart';
 
 class NavigationConfig {
   static const List<NavigationItem> navigationItems = [
-    NavigationItem(
-      icon: FontAwesomeIcons.house,
-      label: 'Home',
-      route: '/home',
-    ),
+    NavigationItem(icon: FontAwesomeIcons.house, label: 'Home', route: '/home'),
     NavigationItem(
       icon: FontAwesomeIcons.cow,
-      label: 'Produtos',
+      label: 'Animais',
       route: '/animals',
-    ),
-    NavigationItem(
-      icon: FontAwesomeIcons.plus,
-      label: 'Cadastrar',
-      route: '/register',
     ),
     NavigationItem(
       icon: FontAwesomeIcons.chartLine,
@@ -32,8 +23,7 @@ class NavigationConfig {
 
   static const List<String> routes = [
     '/home',
-    '/products',
-    '/register',
+    '/animals',
     '/reports',
     '/profile',
   ];

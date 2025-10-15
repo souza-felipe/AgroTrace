@@ -14,7 +14,7 @@ class SocialLogin extends StatelessWidget {
             Expanded(
               child: Container(
                 height: 1,
-                color: AppColors.taupe.withValues(alpha: 0.3),
+                color: AppColors.textSecondary.withValues(alpha: 0.3),
               ),
             ),
             Padding(
@@ -31,7 +31,7 @@ class SocialLogin extends StatelessWidget {
             Expanded(
               child: Container(
                 height: 1,
-                color: AppColors.taupe.withValues(alpha: 0.3),
+                color: AppColors.textSecondary.withValues(alpha: 0.3),
               ),
             ),
           ],
@@ -41,11 +41,13 @@ class SocialLogin extends StatelessWidget {
           width: double.infinity,
           height: 56,
           child: OutlinedButton(
-            onPressed: () {
-            },
+            onPressed: () {},
             style: OutlinedButton.styleFrom(
               backgroundColor: AppColors.surface,
-              side: BorderSide(color: AppColors.taupe.withValues(alpha: 0.3), width: 1),
+              side: BorderSide(
+                color: AppColors.textSecondary.withValues(alpha: 0.3),
+                width: 1,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),

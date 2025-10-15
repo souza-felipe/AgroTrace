@@ -28,9 +28,9 @@ class _LoginFormState extends State<LoginForm> {
         showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (BuildContext dialogContext) => const Center(
-            child: CircularProgressIndicator(),
-          ),
+          builder:
+              (BuildContext dialogContext) =>
+                  const Center(child: CircularProgressIndicator()),
         );
 
         final userCredential = await FirebaseService.signInWithEmailAndPassword(
@@ -45,7 +45,7 @@ class _LoginFormState extends State<LoginForm> {
         if (userCredential != null && userCredential.user != null) {
           if (mounted) {
             // Login bem-sucedido, navegando para /home
-            
+
             // Navegação direta sem SnackBar para evitar conflitos
             Navigator.of(context).pushNamedAndRemoveUntil(
               '/home',
@@ -65,7 +65,7 @@ class _LoginFormState extends State<LoginForm> {
       } catch (e) {
         if (mounted) {
           Navigator.of(context).pop(); // Fecha o loading
-          
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Erro no login: ${e.toString()}'),
@@ -97,11 +97,11 @@ class _LoginFormState extends State<LoginForm> {
               fillColor: AppColors.surface,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: AppColors.taupe, width: 1),
+                borderSide: BorderSide(color: AppColors.border, width: 1),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: AppColors.taupe, width: 1),
+                borderSide: BorderSide(color: AppColors.border, width: 1),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -134,11 +134,11 @@ class _LoginFormState extends State<LoginForm> {
               fillColor: AppColors.surface,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: AppColors.taupe, width: 1),
+                borderSide: BorderSide(color: AppColors.border, width: 1),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide(color: AppColors.taupe, width: 1),
+                borderSide: BorderSide(color: AppColors.border, width: 1),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),

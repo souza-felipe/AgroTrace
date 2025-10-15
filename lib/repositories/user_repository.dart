@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepository {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static const String _userKey = 'user_data';
 
-  // Salvar dados do usuário
   Future<void> saveUserData({
     required String uid,
     required String name,
@@ -20,29 +20,25 @@ class UserRepository {
         'birthDate': _formatBirthDate(birthDate),
         'phone': _formatPhone(phone),
         'email': email.trim().toLowerCase(),
-        'createdAt': FieldValue.serverTimestamp(),
-        'updatedAt': FieldValue.serverTimestamp(),
+        'createdAt': DateTime.now().toIso8601String(),
+        'updatedAt': DateTime.now().toIso8601String(),
       };
 
-      await _firestore
-          .collection('users')
-          .doc(uid)
-          .set(userData);
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = jsonEncode(userData);
+      await prefs.setString(_userKey, jsonString);
     } catch (e) {
-      throw Exception('Erro ao salvar dados no Firestore: $e');
+      throw Exception('Erro ao salvar dados localmente: $e');
     }
   }
 
-  // Obter dados do usuário
   Future<Map<String, dynamic>?> getUserData(String uid) async {
     try {
-      final doc = await _firestore
-          .collection('users')
-          .doc(uid)
-          .get();
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = prefs.getString(_userKey);
 
-      if (doc.exists) {
-        final data = doc.data() as Map<String, dynamic>;
+      if (jsonString != null) {
+        final data = jsonDecode(jsonString) as Map<String, dynamic>;
         return data;
       } else {
         return null;
@@ -52,7 +48,6 @@ class UserRepository {
     }
   }
 
-  // Atualizar dados do usuário
   Future<void> updateUserData({
     required String uid,
     String? name,
@@ -62,52 +57,47 @@ class UserRepository {
     String? email,
   }) async {
     try {
-      final updateData = <String, dynamic>{
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = prefs.getString(_userKey);
 
-      if (name != null) updateData['name'] = name.trim();
-      if (cpf != null) updateData['cpf'] = _formatCpf(cpf);
-      if (birthDate != null) updateData['birthDate'] = _formatBirthDate(birthDate);
-      if (phone != null) updateData['phone'] = _formatPhone(phone);
-      if (email != null) updateData['email'] = email.trim().toLowerCase();
+      if (jsonString != null) {
+        final data = jsonDecode(jsonString) as Map<String, dynamic>;
 
-      await _firestore
-          .collection('users')
-          .doc(uid)
-          .update(updateData);
+        if (name != null) data['name'] = name.trim();
+        if (cpf != null) data['cpf'] = _formatCpf(cpf);
+        if (birthDate != null) data['birthDate'] = _formatBirthDate(birthDate);
+        if (phone != null) data['phone'] = _formatPhone(phone);
+        if (email != null) data['email'] = email.trim().toLowerCase();
+
+        data['updatedAt'] = DateTime.now().toIso8601String();
+
+        final updatedJsonString = jsonEncode(data);
+        await prefs.setString(_userKey, updatedJsonString);
+      }
     } catch (e) {
       throw Exception('Erro ao atualizar dados: $e');
     }
   }
 
-  // Deletar usuário
   Future<void> deleteUser(String uid) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(uid)
-          .delete();
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_userKey);
     } catch (e) {
       throw Exception('Erro ao deletar usuário: $e');
     }
   }
 
-  // Verificar se usuário existe
   Future<bool> userExists(String uid) async {
     try {
-      final doc = await _firestore
-          .collection('users')
-          .doc(uid)
-          .get();
-      
-      return doc.exists;
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = prefs.getString(_userKey);
+      return jsonString != null;
     } catch (e) {
       return false;
     }
   }
 
-  // Métodos de formatação privados
   String _formatCpf(String cpf) {
     final cleanCpf = cpf.replaceAll(RegExp(r'[^\d]'), '');
     if (cleanCpf.length == 11) {

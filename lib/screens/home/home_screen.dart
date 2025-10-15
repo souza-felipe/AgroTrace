@@ -11,8 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void _onProfileTap() {
-  }
+  void _onProfileTap() {}
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: AppColors.darkBrown,
+              color: AppColors.textPrimary,
             ),
           ),
         ),

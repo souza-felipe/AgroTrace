@@ -28,21 +28,18 @@ class NavigationWrapper extends StatelessWidget {
               targetScreen = const HomeScreen();
               break;
             case 1:
-              targetScreen = const AnimalsScreen(); // Produtos
+              targetScreen = const AnimalsScreen();
               break;
             case 2:
-              targetScreen = const PlaceholderScreen(title: 'Cadastrar');
-              break;
-            case 3:
               targetScreen = const PlaceholderScreen(title: 'Relatórios');
               break;
-            case 4:
+            case 3:
               targetScreen = const PlaceholderScreen(title: 'Perfil');
               break;
             default:
               targetScreen = const HomeScreen();
           }
-          
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => targetScreen),
@@ -57,7 +54,7 @@ class NavigationWrapper extends StatelessWidget {
 // Tela placeholder para rotas não implementadas
 class PlaceholderScreen extends StatelessWidget {
   final String title;
-  
+
   const PlaceholderScreen({super.key, required this.title});
 
   @override
@@ -72,11 +69,7 @@ class PlaceholderScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.construction,
-              size: 64,
-              color: Colors.grey[400],
-            ),
+            Icon(Icons.construction, size: 64, color: Colors.grey[400]),
             const SizedBox(height: 16),
             Text(
               '$title em desenvolvimento',
@@ -89,10 +82,7 @@ class PlaceholderScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'Esta funcionalidade será implementada em breve',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey[600],
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             ),
           ],
         ),

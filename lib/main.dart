@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'theme/app_theme.dart';
-import 'screens/animals/animals_screen.dart';
+import 'screens/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
+  // Inicializa Firebase apenas para autenticação
   await Firebase.initializeApp();
-  
+
   runApp(const MyApp());
 }
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'AgroTrace',
       theme: AppTheme.lightTheme,
-      home: const AnimalsScreen(), // Inicia direto na tela de produtos
+      home: const HomeScreen(),
     );
   }
 }
