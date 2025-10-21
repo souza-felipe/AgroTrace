@@ -2,16 +2,16 @@ class Animal {
   String? id;
   String? nomeAnimal;
   String? codigoSisbov;
-  String? idEletronico; // OBRIGATÓRIO
-  String? lotePiqueteAtual; // OBRIGATÓRIO
-  String? dataNascimento; // OBRIGATÓRIO
+  String? idEletronico; 
+  String? lotePiqueteAtual; 
+  String? dataNascimento; 
 
-  String? sexo; // OBRIGATÓRIO - Macho/Fêmea
-  String? raca; // OBRIGATÓRIO
-  String? corPelagem; // OBRIGATÓRIO
-  String? marcacoesFisicas; // OBRIGATÓRIO
-  String? origem; // OBRIGATÓRIO - Nascimento Interno/Compra
-  String? statusReprodutivo; // OBRIGATÓRIO
+  String? sexo;
+  String? raca; 
+  String? corPelagem; 
+  String? marcacoesFisicas; 
+  String? origem; 
+  String? statusReprodutivo; 
 
   String? idPai;
   String? nomePai;
@@ -20,15 +20,20 @@ class Animal {
 
   double? alturaCernelha;
   double? circunferenciaToracica;
-  int? escoreCorporal; // 1 a 5
+  int? escoreCorporal; 
   double? perimetroEscrotal;
 
   double? valorAquisicao;
-  String? statusVenda; // OBRIGATÓRIO
+  String? statusVenda; 
   String? observacoes;
 
   String? dataCadastro;
   String? dataAtualizacao;
+  
+  double? latitude;
+  double? longitude;
+  String? ultimaLocalizacao;
+  String? statusLocalizacao; 
 
   Animal({
     this.id,
@@ -56,9 +61,12 @@ class Animal {
     this.observacoes,
     this.dataCadastro,
     this.dataAtualizacao,
+    this.latitude,
+    this.longitude,
+    this.ultimaLocalizacao,
+    this.statusLocalizacao,
   });
 
-  // Método para criar um Animal a partir de um Map (JSON)
   factory Animal.fromMap(Map<String, dynamic> map) {
     return Animal(
       id: map['id'],
@@ -86,10 +94,13 @@ class Animal {
       observacoes: map['observacoes'],
       dataCadastro: map['dataCadastro'],
       dataAtualizacao: map['dataAtualizacao'],
+      latitude: map['latitude']?.toDouble(),
+      longitude: map['longitude']?.toDouble(),
+      ultimaLocalizacao: map['ultimaLocalizacao'],
+      statusLocalizacao: map['statusLocalizacao'],
     );
   }
 
-  // Método para converter um Animal para Map (JSON)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -117,10 +128,13 @@ class Animal {
       'observacoes': observacoes,
       'dataCadastro': dataCadastro,
       'dataAtualizacao': dataAtualizacao,
+      'latitude': latitude,
+      'longitude': longitude,
+      'ultimaLocalizacao': ultimaLocalizacao,
+      'statusLocalizacao': statusLocalizacao,
     };
   }
 
-  // Método para criar uma cópia do Animal com alguns campos alterados
   Animal copyWith({
     String? id,
     String? nomeAnimal,
@@ -147,6 +161,10 @@ class Animal {
     String? observacoes,
     String? dataCadastro,
     String? dataAtualizacao,
+    double? latitude,
+    double? longitude,
+    String? ultimaLocalizacao,
+    String? statusLocalizacao,
   }) {
     return Animal(
       id: id ?? this.id,
@@ -175,10 +193,13 @@ class Animal {
       observacoes: observacoes ?? this.observacoes,
       dataCadastro: dataCadastro ?? this.dataCadastro,
       dataAtualizacao: dataAtualizacao ?? this.dataAtualizacao,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      ultimaLocalizacao: ultimaLocalizacao ?? this.ultimaLocalizacao,
+      statusLocalizacao: statusLocalizacao ?? this.statusLocalizacao,
     );
   }
 
-  // Método para validar se os campos obrigatórios estão preenchidos
   bool isValid() {
     return idEletronico != null &&
         idEletronico!.isNotEmpty &&
@@ -202,7 +223,6 @@ class Animal {
         statusVenda!.isNotEmpty;
   }
 
-  // Método para obter lista de campos obrigatórios não preenchidos
   List<String> getMissingRequiredFields() {
     List<String> missing = [];
 

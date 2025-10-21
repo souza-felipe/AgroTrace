@@ -39,17 +39,15 @@ class _LoginFormState extends State<LoginForm> {
         );
 
         if (mounted) {
-          Navigator.of(context).pop(); // Fecha o loading
+          Navigator.of(context).pop(); 
         }
 
         if (userCredential != null && userCredential.user != null) {
           if (mounted) {
-            // Login bem-sucedido, navegando para /home
 
-            // Navegação direta sem SnackBar para evitar conflitos
             Navigator.of(context).pushNamedAndRemoveUntil(
               '/home',
-              (route) => false, // Remove todas as rotas anteriores
+              (route) => false, 
             );
           }
         } else {
@@ -64,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
         }
       } catch (e) {
         if (mounted) {
-          Navigator.of(context).pop(); // Fecha o loading
+          Navigator.of(context).pop(); 
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

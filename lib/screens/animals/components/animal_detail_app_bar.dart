@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../theme/app_colors.dart';
+import '../../../components/custom_app_bar.dart';
 
 class AnimalDetailAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -16,35 +16,26 @@ class AnimalDetailAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: AppColors.primary,
-      elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => Navigator.pop(context),
-      ),
-      title: Text(
-        animalName,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      centerTitle: true,
+    return CustomAppBar(
+      title: animalName,
+      showBackButton: true,
       actions: [
-        IconButton(
-          icon: const Icon(Icons.edit, color: Colors.white),
-          onPressed: onEdit,
-        ),
-        IconButton(
-          icon: const Icon(Icons.delete, color: Colors.white),
-          onPressed: onDelete,
-        ),
+        if (onEdit != null)
+          IconButton(
+            icon: Icon(Icons.edit, color: Colors.white),
+            onPressed: onEdit,
+            tooltip: 'Editar Animal',
+          ),
+        if (onDelete != null)
+          IconButton(
+            icon: Icon(Icons.delete, color: Colors.white),
+            onPressed: onDelete,
+            tooltip: 'Excluir Animal',
+          ),
       ],
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(56);
 }

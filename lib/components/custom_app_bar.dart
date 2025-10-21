@@ -3,122 +3,115 @@ import '../theme/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final VoidCallback? onProfileTap;
+  final TextStyle? titleStyle;
+  final VoidCallback? onProfileTap; 
   final bool showBackButton;
+  final VoidCallback? onBack;
   final VoidCallback? onBackTap;
+  final List<Widget>? actions;
 
   const CustomAppBar({
     super.key,
     required this.title,
-    this.onProfileTap,
+    this.titleStyle,
+    this.onProfileTap, 
     this.showBackButton = false,
+    this.onBack,
     this.onBackTap,
+    this.actions, 
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        // Voltando para a cor verde original
-        color: AppColors.primary, // Verde vibrante #1CBA76
+        color: AppColors.primary,
         boxShadow: [
           BoxShadow(
             color: AppColors.textSecondary.withAlpha(51),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            blurRadius: 12, 
+            offset: const Offset(0, 4), 
           ),
         ],
       ),
-      child: SafeArea(
-        child: Container(
-          height: 70,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            children: [
-              // Botão voltar (se necessário)
-              if (showBackButton)
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: onBackTap ?? () => Navigator.of(context).pop(),
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(51, 255, 255, 255),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-
-              // Título simples sem logo (para testar)
-              if (!showBackButton) ...[
-                Text(
-                  'AgroTrace',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-
-              const Spacer(),
-
-              if (showBackButton)
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      title.toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-
-              // Botão de perfil
+      child: Container(
+        height: 56 + MediaQuery.of(context).padding.top,
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top,
+          left: 16,
+          right: 16,
+          bottom: 8,
+        ),
+        child: Row(
+          children: [
+            if (showBackButton)
               Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  borderRadius: BorderRadius.circular(24),
-                  onTap: onProfileTap,
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: onBack ?? onBackTap ?? () => Navigator.of(context).pop(),
                   child: Container(
-                    width: 48,
-                    height: 48,
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(
-                        color: Color.fromARGB(77, 255, 255, 255),
-                        width: 2,
-                      ),
+                      color: Color.fromARGB(51, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(
-                      Icons.person,
-                      color: AppColors.primary,
-                      size: 20,
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                      size: 18,
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
+
+            Expanded(
+              child: Center(
+                child: Text(
+                  title.toUpperCase(),
+                  style: titleStyle ?? const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700, 
+                    letterSpacing: 0.5, 
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+
+            if (actions != null)
+              ...actions!
+            else if (onProfileTap != null)
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: onProfileTap,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(51, 255, 255, 255),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              )
+            else
+              const SizedBox(width: 40),
+          ],
         ),
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(70);
+  Size get preferredSize => const Size.fromHeight(56);
 }

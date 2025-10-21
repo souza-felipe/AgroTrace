@@ -10,21 +10,21 @@ class NavigationConfig {
       route: '/animals',
     ),
     NavigationItem(
-      icon: FontAwesomeIcons.chartLine,
-      label: 'Relatórios',
-      route: '/reports',
+      icon: FontAwesomeIcons.qrcode,
+      label: 'Scanner',
+      route: '/scanner',
     ),
     NavigationItem(
-      icon: FontAwesomeIcons.user,
-      label: 'Perfil',
-      route: '/profile',
+      icon: FontAwesomeIcons.map,
+      label: 'Mapa',
+      route: '/map',
     ),
   ];
 
   static const List<String> routes = [
     '/home',
     '/animals',
-    '/reports',
-    '/profile',
+    '/scanner',
+    '/map',
   ];
 }

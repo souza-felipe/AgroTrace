@@ -115,6 +115,7 @@ class AnimalListItem extends StatelessWidget {
     );
   }
 
+
   Color _getStatusColor(String? status) {
     switch (status) {
       case 'Disponível':

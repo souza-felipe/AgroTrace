@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
+import '../../components/custom_app_bar.dart';
 import 'components/terms_content.dart';
 
 class TermsScreen extends StatelessWidget {
@@ -9,11 +10,9 @@ class TermsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: const Text('Termos e Políticas AgroTrace'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        elevation: 0,
+      appBar: CustomAppBar(
+        title: 'Termos e Políticas',
+        showBackButton: true,
       ),
       body: SafeArea(
         child: Column(

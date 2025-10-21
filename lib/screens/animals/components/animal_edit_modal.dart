@@ -17,7 +17,6 @@ class AnimalEditModal extends StatefulWidget {
 }
 
 class _AnimalEditModalState extends State<AnimalEditModal> {
-  // Controllers para todos os campos
   late TextEditingController _nomeController;
   late TextEditingController _codigoSisbovController;
   late TextEditingController _idEletronicoController;
@@ -39,7 +38,6 @@ class _AnimalEditModalState extends State<AnimalEditModal> {
   late TextEditingController _valorAquisicaoController;
   late TextEditingController _observacoesController;
 
-  // Variáveis de estado
   late String _sexo;
   late String _statusVenda;
 
@@ -561,7 +559,6 @@ class _AnimalEditModalState extends State<AnimalEditModal> {
 
   void _saveAnimal() {
     final updatedAnimal = widget.animal.copyWith(
-      // Identificação
       nomeAnimal:
           _nomeController.text.trim().isEmpty
               ? null
@@ -583,7 +580,6 @@ class _AnimalEditModalState extends State<AnimalEditModal> {
               ? null
               : _dataNascimentoController.text.trim(),
 
-      // Dados Básicos
       sexo: _sexo,
       raca:
           _racaController.text.trim().isEmpty
@@ -606,7 +602,6 @@ class _AnimalEditModalState extends State<AnimalEditModal> {
               ? null
               : _statusReprodutivoController.text.trim(),
 
-      // Filiação
       idPai:
           _idPaiController.text.trim().isEmpty
               ? null
@@ -624,7 +619,6 @@ class _AnimalEditModalState extends State<AnimalEditModal> {
               ? null
               : _nomeMaeController.text.trim(),
 
-      // Características Físicas
       alturaCernelha:
           _alturaCernelhaController.text.trim().isEmpty
               ? null
@@ -642,7 +636,6 @@ class _AnimalEditModalState extends State<AnimalEditModal> {
               ? null
               : double.tryParse(_perimetroEscrotalController.text.trim()),
 
-      // Dados Comerciais
       valorAquisicao:
           _valorAquisicaoController.text.trim().isEmpty
               ? null

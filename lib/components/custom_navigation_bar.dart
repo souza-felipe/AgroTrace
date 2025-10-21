@@ -5,12 +5,14 @@ class CustomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
   final List<NavigationItem> items;
+  final VoidCallback? onMoreTap; 
 
   const CustomNavigationBar({
     super.key,
     required this.currentIndex,
     required this.onTap,
     required this.items,
+    this.onMoreTap, 
   });
 
   @override
@@ -51,52 +53,89 @@ class CustomNavigationBar extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children:
-                items.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final item = entry.value;
-                  final isSelected = index == currentIndex;
+            children: [
+                 ...items.asMap().entries.map((entry) {
+                final index = entry.key;
+                final item = entry.value;
+                final isSelected = index == currentIndex;
 
-                  return Expanded(
-                    child: GestureDetector(
-                      onTap: () => onTap(index),
-                      child: SizedBox(
-                        height: 70,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              item.icon,
+                return Expanded(
+                  child: GestureDetector(
+                    onTap: () => onTap(index),
+                    child: SizedBox(
+                      height: 70,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            item.icon,
+                            color:
+                                isSelected
+                                    ? AppColors.primary
+                                    : AppColors.textSecondary,
+                            size: 16,
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            item.label,
+                            style: TextStyle(
                               color:
                                   isSelected
                                       ? AppColors.primary
                                       : AppColors.textSecondary,
-                              size: 16,
+                              fontSize: 14,
+                              fontWeight:
+                                  isSelected
+                                      ? FontWeight.w600
+                                      : FontWeight.w400,
                             ),
-                            const SizedBox(height: 2),
-                            Text(
-                              item.label,
-                              style: TextStyle(
-                                color:
-                                    isSelected
-                                        ? AppColors.primary
-                                        : AppColors.textSecondary,
-                                fontSize: 14,
-                                fontWeight:
-                                    isSelected
-                                        ? FontWeight.w600
-                                        : FontWeight.w400,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                }).toList(),
+                  ),
+                );
+              }),
+              
+                     if (onMoreTap != null)
+                GestureDetector(
+                  onTap: onMoreTap,
+                  child: SizedBox(
+                    width: 60,
+                    height: 70,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Icon(
+                            Icons.more_vert,
+                            color: AppColors.primary,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'MAIS',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
           ),
         ],
       ),

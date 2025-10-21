@@ -7,7 +7,6 @@ class SignupForm extends StatefulWidget {
   final Function(Map<String, String> formData)? onSignup;
   final VoidCallback? onButtonPressed;
 
-  // Controladores externos
   final TextEditingController? nameController;
   final TextEditingController? cpfController;
   final TextEditingController? birthDateController;
@@ -33,7 +32,6 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
-  // Controladores locais (fallback se não fornecidos externamente)
   late final TextEditingController _nameController;
   late final TextEditingController _cpfController;
   late final TextEditingController _birthDateController;

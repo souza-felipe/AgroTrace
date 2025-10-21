@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../services/usuario_api_service.dart';
 
 class UserRepository {
   static const String _userKey = 'user_data';
@@ -76,6 +77,53 @@ class UserRepository {
       }
     } catch (e) {
       throw Exception('Erro ao atualizar dados: $e');
+    }
+  }
+
+  static Future<void> saveUser(Map<String, dynamic> userData) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final jsonString = jsonEncode(userData);
+      await prefs.setString(_userKey, jsonString);
+    } catch (e) {
+      throw Exception('Erro ao salvar dados localmente: $e');
+    }
+  }
+
+  static Future<Map<String, dynamic>?> buscarUsuarioDoBackend(String uid) async {
+    try {
+      final response = await UsuarioApiService.buscarUsuario(uid);
+      
+      if (response['status'] == 'success') {
+        final userData = response['data'];
+        await saveUser(userData);
+        return userData;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<bool> atualizarUsuarioNoBackend(String uid, Map<String, dynamic> userData) async {
+    try {
+      final response = await UsuarioApiService.atualizarUsuario(uid, userData);
+      
+      if (response['status'] == 'success') {
+        await saveUser(userData);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<void> sincronizarAposLogin(String uid) async {
+    try {
+      await buscarUsuarioDoBackend(uid);
+    } catch (e) {
+      throw Exception('Erro ao sincronizar usuário: $e');
     }
   }
 

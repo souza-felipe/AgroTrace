@@ -1,9 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import '../repositories/user_repository.dart';
+import 'usuario_api_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final UserRepository _userRepository = UserRepository();
+
+  static Future<void> sincronizarUsuarioComBackend(Map<String, dynamic> userData) async {
+    try {
+      await UsuarioApiService.criarUsuario(userData);
+    } catch (e) {
+      throw Exception('Erro ao sincronizar usuário com backend: $e');
+    }
+  }
 
   Future<UserCredential> signUp({
     required String email,
@@ -25,6 +34,17 @@ class AuthService {
 
       final uid = userCredential.user!.uid;
 
+      final userData = {
+        'uid': uid,
+        'name': name.trim(),
+        'cpf': cpf,
+        'birthDate': birthDate,
+        'phone': phone,
+        'email': email.trim().toLowerCase(),
+        'createdAt': DateTime.now().toIso8601String(),
+        'updatedAt': DateTime.now().toIso8601String(),
+      };
+
       await _userRepository.saveUserData(
         uid: uid,
         name: name,
@@ -33,6 +53,8 @@ class AuthService {
         phone: phone,
         email: email,
       );
+
+      await sincronizarUsuarioComBackend(userData);
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
@@ -61,10 +83,16 @@ class AuthService {
     required String password,
   }) async {
     try {
-      return await _auth.signInWithEmailAndPassword(
+      final userCredential = await _auth.signInWithEmailAndPassword(
         email: email.trim().toLowerCase(),
         password: password,
       );
+
+      if (userCredential.user != null) {
+        await UserRepository.sincronizarAposLogin(userCredential.user!.uid);
+      }
+
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       switch (e.code) {
@@ -126,6 +154,18 @@ class AuthService {
         phone: phone,
         email: email,
       );
+
+      final userData = {
+        'uid': uid,
+        'name': name,
+        'cpf': cpf,
+        'birthDate': birthDate,
+        'phone': phone,
+        'email': email,
+        'updatedAt': DateTime.now().toIso8601String(),
+      };
+
+      await UserRepository.atualizarUsuarioNoBackend(uid, userData);
     } catch (e) {
       throw Exception('Erro ao atualizar dados: $e');
     }
@@ -138,4 +178,5 @@ class AuthService {
       throw Exception('Erro ao deletar usuário: $e');
     }
   }
+
 }

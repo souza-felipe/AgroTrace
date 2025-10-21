@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'custom_navigation_bar.dart';
+import 'custom_app_bar.dart';
 import 'navigation_config.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/animals/animals_screen.dart';
+import '../screens/scanner/qr_scanner_screen.dart';
+import '../screens/map/enhanced_map_screen.dart';
 
 class NavigationWrapper extends StatelessWidget {
   final Widget child;
@@ -21,7 +24,6 @@ class NavigationWrapper extends StatelessWidget {
       bottomNavigationBar: CustomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) {
-          // Navegar por widgets em vez de rotas
           Widget targetScreen;
           switch (index) {
             case 0:
@@ -31,9 +33,12 @@ class NavigationWrapper extends StatelessWidget {
               targetScreen = const AnimalsScreen();
               break;
             case 2:
-              targetScreen = const PlaceholderScreen(title: 'Relatórios');
+              targetScreen = const QRScannerScreen();
               break;
             case 3:
+              targetScreen = const EnhancedMapScreen();
+              break;
+            case 4:
               targetScreen = const PlaceholderScreen(title: 'Perfil');
               break;
             default:
@@ -51,7 +56,6 @@ class NavigationWrapper extends StatelessWidget {
   }
 }
 
-// Tela placeholder para rotas não implementadas
 class PlaceholderScreen extends StatelessWidget {
   final String title;
 
@@ -60,10 +64,9 @@ class PlaceholderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-        backgroundColor: const Color(0xFF1CBA76),
-        foregroundColor: Colors.white,
+      appBar: CustomAppBar(
+        title: title,
+        showBackButton: true,
       ),
       body: Center(
         child: Column(

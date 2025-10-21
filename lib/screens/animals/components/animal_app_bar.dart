@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import '../../../theme/app_colors.dart';
 import '../../../stores/animal_store.dart';
+import '../../../components/custom_app_bar.dart';
 
 class AnimalAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const AnimalAppBar({super.key});
+  final VoidCallback? onFilterTap;
+  
+  const AnimalAppBar({super.key, this.onFilterTap});
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: AppColors.primary,
-      elevation: 0,
-      centerTitle: true,
-      title: const Text(
-        'ANIMAIS',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+    return CustomAppBar(
+      title: 'Animais',
       actions: [
+        IconButton(
+          icon: const Icon(Icons.filter_list, color: Colors.white),
+          onPressed: onFilterTap,
+          tooltip: 'Filtrar Animais',
+        ),
         IconButton(
           icon: const Icon(Icons.refresh, color: Colors.white),
           onPressed: () async {
@@ -37,19 +35,12 @@ class AnimalAppBar extends StatelessWidget implements PreferredSizeWidget {
               }
             }
           },
-        ),
-        Container(
-          margin: const EdgeInsets.only(right: 16),
-          child: CircleAvatar(
-            radius: 20,
-            backgroundColor: Color.fromARGB(51, 255, 255, 255),
-            child: const Icon(Icons.person, color: Colors.white, size: 20),
-          ),
+          tooltip: 'Atualizar Lista',
         ),
       ],
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(56);
 }
